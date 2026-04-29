@@ -1,2 +1,3 @@
 # My_Projects
 This repo is all about the projects that Im working on or accomplished, Practically Implementing my skills and the tech i have learn.
+The Smart Traffic Signal Controller project presents an intelligent traffic management system designed to optimize vehicle flow at an intersection using real-time decision-making.The system simulates a traffic intersection using a web-based interface where vehicles are managed using fundamental data structures such as queues and priority queues. Normal vehicles are handled using a First-In-First-Out (FIFO) queue, ensuring fairness in traffic flow, while emergency vehicles such as ambulances, fire trucks, and police vehicles are managed using a priority queue implemented as a max-heap.
