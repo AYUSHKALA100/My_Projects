@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traffic Priority Simulator</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+
+<header>
+  <div class="logo">TRAFFIC<span>SIM</span> // PRIORITY ENGINE</div>
+  <div class="status-bar">
+    <div class="status-item"><div class="dot green"></div> NORMAL QUEUE ACTIVE</div>
+    <div class="status-item"><div class="dot red"></div> PRIORITY QUEUE ACTIVE</div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="side-panel">
+    <div class="panel-title">⚡ DISPATCH CONTROL</div>
+
+    <button class="btn btn-normal" onclick="addNormalVehicle()">
+      🚗 ADD NORMAL VEHICLE
+    </button>
+    <button class="btn btn-normal" onclick="addNormalVehicle('truck')">
+      🚚 ADD TRUCK
+    </button>
+    <button class="btn btn-emergency" onclick="addEmergencyVehicle('ambulance')">
+      🚑 DISPATCH AMBULANCE
+    </button>
+    <button class="btn btn-emergency" onclick="addEmergencyVehicle('fire')">
+      🚒 DISPATCH FIRE TRUCK
+    </button>
+    <button class="btn btn-emergency" onclick="addEmergencyVehicle('police')">
+      🚓 DISPATCH POLICE
+    </button>
+
+    <hr class="divider">
+
+    <div class="slider-wrap">
+      <div class="slider-label">
+        <span>SIM SPEED</span>
+        <span id="speedVal">1x</span>
+      </div>
+      <input type="range" min="0.5" max="4" step="0.5" value="1" id="speedSlider" oninput="updateSpeed(this.value)">
+    </div>
+
+    <button class="btn btn-control" id="pauseBtn" onclick="togglePause()">⏸ PAUSE</button>
+    <button class="btn btn-control" onclick="autoSpawn()">🔄 AUTO-SPAWN ON/OFF</button>
+    <button class="btn btn-danger" onclick="clearAll()">⚠ CLEAR ALL</button>
+
+    <hr class="divider">
+    <div class="panel-title">🔴 INTERSECTION LIGHT</div>
+    <div class="traffic-light">
+      <div class="tl-dot" id="tl-red"></div>
+      <div class="tl-dot" id="tl-yellow"></div>
+      <div class="tl-dot" id="tl-green"></div>
+      <span class="tl-label" id="tl-label">GREEN</span>
+    </div>
+
+    <hr class="divider">
+    <div class="panel-title">📖 LEGEND</div>
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-icon" style="background:#1a3a1a; border:1px solid #00ff88;">🚗</div>
+        <span>Normal Vehicle</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background:#1a3a1a; border:1px solid #00ff88;">🚚</div>
+        <span>Truck (slower)</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background:#3a1a1a; border:1px solid #ff3c3c;">🚑</div>
+        <span>Ambulance [P:10]</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background:#3a1a1a; border:1px solid #ff3c3c;">🚒</div>
+        <span>Fire Truck [P:9]</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-icon" style="background:#3a1a1a; border:1px solid #ff3c3c;">🚓</div>
+        <span>Police [P:8]</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER SIMULATION -->
+  <div class="sim-area">
+    <canvas id="simCanvas"></canvas>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="side-panel">
+    <div class="panel-title">📊 Day-Wise(Count)</div>
+
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-value accent" id="stat-total">0</div>
+        <div class="stat-label">TOTAL</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value normal" id="stat-cleared">0</div>
+        <div class="stat-label">CLEARED</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value emergency" id="stat-emergency">0</div>
+        <div class="stat-label">EMERGENCY</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value warning" id="stat-waiting">0</div>
+        <div class="stat-label">WAITING</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+    <div class="panel-title">🔺 PRIORITY QUEUE</div>
+    <div class="queue-label">Emergency vehicles — sorted by priority</div>
+    <div class="queue-box" id="priorityQueue"></div>
+
+    <hr class="divider">
+    <div class="panel-title">📋 NORMAL QUEUE</div>
+    <div class="queue-label">Standard vehicles — FIFO order</div>
+    <div class="queue-box" id="normalQueue"></div>
+
+    <hr class="divider">
+    <div class="panel-title">📟 SYSTEM LOG</div>
+    <div class="log-box" id="logBox"></div>
+  </div>
+
+</div>
+<script src="./index.js"></script>
+</body>
+</html>
